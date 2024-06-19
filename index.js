@@ -3,7 +3,7 @@ const express = require("express")
 const app = express()
 
 app.use("/", (req, res) => {
-    res.send(`<h1>${process.env.NAME} is Lerning! And It is Really Awesome!</h1>`)
+    res.send(`<h1>${process.env.NAME} is Lerning! - And - It is Really Awesome!</h1>`)
 })
 
 const port = process.env.PORT || 3000
@@ -28,4 +28,18 @@ docker exec -it node-app bash --> execueted a bash to the container node-app
 docker rm node-app -f --> remove the node-app continer with focer
 docker image rm node-app-image --> remove the image with the name node-app-image
 printenv --> into the bash show the env variables
+docker volume ls --> list the volumes that you have
+docker volume prune --> deleted all volumes that are not using
+*/
+
+/* Docker-Compose to Crated a many docker containers automatically
+We need to build a docker-compose.yml file and put the configuration on it
+docker-compose up -d --> execute the docker-compose.yml file
+docker-compose down -v --> remuve the containers and the volumes
+docker-compose up -d --build --> forze to do the build  
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --> create one container
+    with the union of the configurations files that you pass
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --> the same but 
+    force the build process
+
 */
