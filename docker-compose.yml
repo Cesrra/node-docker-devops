@@ -6,3 +6,8 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
+  mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dbmongo
+      - MONGO_INITDB_ROOT_PASSWORD=p@ssw@rd

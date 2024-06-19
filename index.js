@@ -41,5 +41,15 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --> create 
     with the union of the configurations files that you pass
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --> the same but 
     force the build process
+*/
+
+/* Create a MongoDB
+mongosh -u "dbmongo" -p "p@ssw@rd" --> into the bash of container of mongo, this command loging to DB
+docker exec -it node-docker-devops_mongodb_1 mongosh -u "dbmongo" -p "p@ssw@rd" --> to loging faster
+use mydb --> to use the mydb database
+show dbs --> show the available databases
+db.books.insert({"name": "César Rincón"})
+db.books.find() --> get all tha documents from collection books
+------ If you down de containers the information was gone -----------
 
 */
