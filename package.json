@@ -1,0 +1,15 @@
+{
+  "name": "docker-devops",
+  "version": "1.0.0",
+  "description": "This project is a practice in DevOps using Docker and Node.js with Express.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
