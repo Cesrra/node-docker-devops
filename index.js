@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require("./config/config")
+
+const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require("./src/config/config")
+const postRouter = require("./src/routes/postRoutes")
 
 const app = express()
 const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
@@ -17,6 +19,10 @@ const conectWithRetry = () => {
 }
 
 conectWithRetry()
+
+app.use(express.json())
+
+app.use("/api/v1/posts", postRouter)
 
 app.use("/", (req, res) => {
     res.send(`<h1>${process.env.NAME} is Lerning! - And - It is Really Awesome!</h1>`)
