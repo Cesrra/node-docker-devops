@@ -1,6 +1,13 @@
 const express = require("express")
+const mongoose = require("mongoose")
+const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require("./config/config")
 
 const app = express()
+const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
+mongoose
+    .connect(MONGO_URL)
+    .then(() => console.log("Succesfully conected to BD"))
+    .catch((e) => console.log(e))
 
 app.use("/", (req, res) => {
     res.send(`<h1>${process.env.NAME} is Lerning! - And - It is Really Awesome!</h1>`)
@@ -51,5 +58,9 @@ show dbs --> show the available databases
 db.books.insert({"name": "César Rincón"})
 db.books.find() --> get all tha documents from collection books
 ------ If you down de containers the information was gone -----------
+docker inspect node-docker-devops_mongodb_1 --> get deatils about that container "IPAddress".
+    this works with networks, ...
+docker logs node-docker-devops_node-app_1
+docker network ls
 
 */
