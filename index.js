@@ -4,10 +4,19 @@ const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require("./config/c
 
 const app = express()
 const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
-mongoose
-    .connect(MONGO_URL)
-    .then(() => console.log("Succesfully conected to BD"))
-    .catch((e) => console.log(e))
+
+const conectWithRetry = () => {
+    mongoose
+        .connect(MONGO_URL)
+        .then(() => console.log("Succesfully conected to BD"))
+        .catch((e) => {
+            console.log(e)
+            setTimeout(conectWithRetry, 5000)
+        })
+
+}
+
+conectWithRetry()
 
 app.use("/", (req, res) => {
     res.send(`<h1>${process.env.NAME} is Lerning! - And - It is Really Awesome!</h1>`)

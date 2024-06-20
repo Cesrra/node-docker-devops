@@ -10,6 +10,8 @@ services:
       - MONGO_PORT=27017
       - MONGO_USER=dbmongo
       - MONGO_PASSWORD=p4ssw0rd
+    depends_on:
+      - mongodb
   mongodb:
     image: mongo
     environment:
