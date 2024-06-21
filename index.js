@@ -1,9 +1,19 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const redis = require("redis")
+const session = require("express-session")
+const RedisStore = require("connect-redis").default
 
-const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require("./src/config/config")
+const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, SESSION_SECRET, REDIS_PORT } = require("./src/config/config")
 const postRouter = require("./src/routes/postRoutes")
 const userRouter = require("./src/routes/userRoutes")
+
+const redisClient = redis.createClient({
+    socket: {
+        host: REDIS_URL,
+        port: REDIS_PORT,
+    }
+})
 
 const app = express()
 const MONGO_URL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`
@@ -16,12 +26,39 @@ const conectWithRetry = () => {
             console.log(e)
             setTimeout(conectWithRetry, 5000)
         })
+}
 
+redisClient.on('error', (err) => {
+    console.error('Redis error:', err)
+})
+
+const conectRedis = async () => {
+    try {
+        await redisClient.connect();
+        console.log("Connected to Redis");
+    } catch (err) {
+        console.error("Could not connect to Redis:", err);
+    }
 }
 
 conectWithRetry()
+conectRedis()
 
 app.use(express.json())
+
+app.use(session({
+    store: new RedisStore({
+        client: redisClient
+    }),
+    secret: SESSION_SECRET,
+    cookie: {
+        secure: false,
+        resave: false,
+        saveUninitialized: false,
+        httpOnly: true,
+        maxAge: 3000000
+    }
+}))
 
 app.use("/api/v1/posts", postRouter)
 app.use("/api/v1/users", userRouter)
@@ -67,6 +104,8 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --> create 
     with the union of the configurations files that you pass
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --> the same but 
     force the build process
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build -V -->
+    recreate anonymous volumes instead of retrieving data from the previous containers
 */
 
 /* Create a MongoDB
@@ -81,5 +120,12 @@ docker inspect node-docker-devops_mongodb_1 --> get deatils about that container
     this works with networks, ...
 docker logs node-docker-devops_node-app_1
 docker network ls
+*/
+
+/* Redis
+docker exec -it node-docker-devops_redis_1 redis-cli --> conect to the redis cli
+KEYS * --> show all keys that are available
+GET "sess:QBVCPHkHdFEoaY3FBFN9gYlembxWEwRk" --> get details about the cookie session
+
 
 */
