@@ -45,7 +45,7 @@ conectWithRetry()
 conectRedis()
 
 app.use(express.json())
-
+app.enable("trust proxy")
 app.use(session({
     store: new RedisStore({
         client: redisClient
@@ -106,6 +106,8 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build --
     force the build process
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build -V -->
     recreate anonymous volumes instead of retrieving data from the previous containers
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build --scale node-app=3 -->
+    allow you to scale the containers, in this case was create three nose-app containers     
 */
 
 /* Create a MongoDB
