@@ -138,6 +138,7 @@ Open GitBash
 Source to the private key location in your local
 sudo chmod 400 vm-node-key-v-1.pem
 ssh -i "vm-node-key-v-1.pem" ubuntu@3.90.1.244
+
 Now in the instance of EC2
 download docker --> https://get.docker.com/
     curl -fsSL https://get.docker.com -o install-docker.sh
@@ -148,4 +149,17 @@ download docker-compose as sudo --> https://docs.docker.com/compose/install/linu
     curl -SL https://github.com/docker/compose/releases/download/v2.27.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
 install docker-compose -->
     chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+
+Put .env variables on EC2 instance
+go to /
+sudo su
+cd root
+vi .env
+    put the env variables
+    press "esc" + :wq + "enter"
+vi .profile
+    at the button of file plus jum of line write the next
+    set -o allexport; source /root/.env; set +o allexport
+    press "esc" + :wq + "enter"
+
 */
