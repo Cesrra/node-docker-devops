@@ -130,6 +130,22 @@ docker network ls
 docker exec -it node-docker-devops_redis_1 redis-cli --> conect to the redis cli
 KEYS * --> show all keys that are available
 GET "sess:QBVCPHkHdFEoaY3FBFN9gYlembxWEwRk" --> get details about the cookie session
+*/
 
-
+/* In Cloud Computed ubuntu
+Conected with the EC2 intances (ubuntu)
+Open GitBash
+Source to the private key location in your local
+sudo chmod 400 vm-node-key-v-1.pem
+ssh -i "vm-node-key-v-1.pem" ubuntu@3.90.1.244
+Now in the instance of EC2
+download docker --> https://get.docker.com/
+    curl -fsSL https://get.docker.com -o install-docker.sh
+install docker --> sudo sh install-docker.sh --dry-run
+download docker-compose as sudo --> https://docs.docker.com/compose/install/linux/
+    DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+    mkdir -p $DOCKER_CONFIG/cli-plugins
+    curl -SL https://github.com/docker/compose/releases/download/v2.27.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+install docker-compose -->
+    chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
 */
