@@ -140,15 +140,8 @@ sudo chmod 400 vm-node-key-v-1.pem
 ssh -i "vm-node-key-v-1.pem" ubuntu@3.90.1.244
 
 Now in the instance of EC2
-download docker --> https://get.docker.com/
-    curl -fsSL https://get.docker.com -o install-docker.sh
-install docker --> sudo sh install-docker.sh --dry-run
-download docker-compose as sudo --> https://docs.docker.com/compose/install/linux/
-    DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-    mkdir -p $DOCKER_CONFIG/cli-plugins
-    curl -SL https://github.com/docker/compose/releases/download/v2.27.2/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-install docker-compose -->
-    chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+download and install docker --> https://docs.docker.com/engine/install/ubuntu/#uninstall-docker-engine
+download and install docker-compose as sudo --> https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04
 
 Put .env variables on EC2 instance
 go to /
@@ -161,5 +154,43 @@ vi .profile
     at the button of file plus jum of line write the next
     set -o allexport; source /root/.env; set +o allexport
     press "esc" + :wq + "enter"
+*/
 
+ /*
+if [ "$BASH" ]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+fi
+
+mesg n 2> /dev/null || true
+
+//set -o allexport; source /root/.env; set +o allexport
+if [ -f /root/.env ]; then
+    export $(cat /root/.env | xargs)
+fi
+*/
+
+/*
+MONGO_USER=dbmongoo
+MONGO_PASSWORD=p4ssw0rdd
+SESSION_SECRET=secret
+MONGO_INITDB_ROOT_USERNAME=dbmongoo
+MONGO_INITDB_ROOT_PASSWORD=p4ssw0rdd
+
+export MONGO_USER=dbmongoo
+export MONGO_PASSWORD=p4ssw0rdd
+export SESSION_SECRET=secret
+export MONGO_INITDB_ROOT_USERNAME=dbmongoo
+export MONGO_INITDB_ROOT_PASSWORD=p4ssw0rdd
+
+source /root/.profile
+*/
+
+/* Commands Linux
+vi /root/.env --> equals to nano, allow edit the fiel
+sudo passwd root --> change the password to user_name
+sudo systemctl restart sshd
+sudo usermod -aG sudo john --> change the group to the sudo
+sudo usermod -g developers john --> change tje gropu to developers
 */
