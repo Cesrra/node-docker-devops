@@ -14,4 +14,12 @@ services:
     environment:
       - NODE_ENV=development
       - NAME=Develop César
+      - PORT=3000
+      - MONGO_USER=dbmongo
+      - MONGO_PASSWORD=p4ssw0rd
+      - SESSION_SECRET=secret
     command: npm run dev
+  mongodb:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=dbmongo
+      - MONGO_INITDB_ROOT_PASSWORD=p4ssw0rd
